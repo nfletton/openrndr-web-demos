@@ -193,8 +193,56 @@ body.nav-collapsed .nav :is(h1, .groups) {
     display: none !important; /* hide children so they are not focusable */
 }
 
-.wrap {
-    display: contents; /* keep semantics without extra box */
+/* Status information bar at the bottom of the content area */
+.status-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+    max-height: 200px;
+    transition: transform 0.3s ease;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-info[aria-hidden="true"] {
+    transform: translateY(100%);
+}
+
+.status-info-content {
+    padding: 12px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.status-info-toggle {
+    position: absolute;
+    top: -30px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.status-info-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.status-info[aria-hidden="false"] .status-info-toggle {
+    background: var(--muted);
 }
 
 /* Status bar */

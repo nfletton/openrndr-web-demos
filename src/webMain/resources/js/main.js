@@ -2,7 +2,9 @@ export function initUI(sketchJson, webTarget) {
     let links;
     let activeLink = null;
     let navHidden = 'true';
+    let statusHidden = 'true';
     const navVisCookie = 'navHidden';
+    const statusVisCookie = 'statusHidden';
     const navWidthCookie = 'navWidth';
     const defaultNavWidth = '240px';
     let navWidth = defaultNavWidth;
@@ -103,6 +105,7 @@ export function initUI(sketchJson, webTarget) {
     function initNavStatus() {
         const newNavWidth = getCookie(navWidthCookie) ?? defaultNavWidth;
         const newNavHidden = getCookie(navVisCookie) ?? 'false';
+        const newStatusHidden = getCookie(statusVisCookie) ?? 'true';
 
         if (newNavWidth !== navWidth) {
             navWidth = newNavWidth;
@@ -113,6 +116,12 @@ export function initUI(sketchJson, webTarget) {
             navHidden = newNavHidden;
             setCookie(navVisCookie, navHidden);
         }
+
+        if (newStatusHidden !== statusHidden) {
+            statusHidden = newStatusHidden;
+            setCookie(statusVisCookie, statusHidden);
+        }
+
         nav.style.width = navWidth;
         nav.setAttribute('aria-hidden', navHidden);
 
@@ -122,6 +131,15 @@ export function initUI(sketchJson, webTarget) {
         } else {
             document.body.classList.remove('nav-collapsed');
             nav.classList.add('visible');
+        }
+
+        const statusInfo = document.getElementById('status-info');
+        if (statusInfo) {
+            statusInfo.setAttribute('aria-hidden', statusHidden);
+            const toggleBtn = document.getElementById('toggleStatusInfo');
+            if (toggleBtn) {
+                toggleBtn.textContent = statusHidden === 'true' ? '▲' : '▼';
+            }
         }
     }
 
@@ -175,6 +193,16 @@ export function initUI(sketchJson, webTarget) {
             btnToggle.setAttribute('aria-label', btnToggle.title);
             btnToggle.setAttribute('title', btnToggle.title);
             setCookie(navVisCookie, navHidden);
+        });
+
+        // Status info toggle
+        const btnToggleStatus = document.getElementById('toggleStatusInfo');
+        const statusInfo = document.getElementById('status-info');
+        btnToggleStatus?.addEventListener('click', () => {
+            statusHidden = !statusHidden
+            statusInfo?.setAttribute('aria-hidden', statusHidden);
+            btnToggleStatus.textContent = statusHidden === 'true' ? '▲' : '▼';
+            setCookie(statusVisCookie, statusHidden);
         });
 
         // web target buttons
@@ -248,6 +276,13 @@ export function initUI(sketchJson, webTarget) {
             if (commentEl) {
                 commentEl.textContent = sketch.comment;
             }
+        }
+
+        const statusInfoContent = document.querySelector('.status-info-content');
+        if (sketch && statusInfoContent) {
+            statusInfoContent.innerHTML = `
+                <div style="margin-bottom: 4px;"><strong>Status:</strong> ${sketch.status}</div>
+            `;
         }
     }
 
