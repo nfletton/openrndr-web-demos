@@ -55,7 +55,7 @@ private fun SketchData.toDto(): SketchDto = SketchDto(
     navTitle = navTitle,
     title = title,
     docLink = docLink,
-    status = status.name,
+    status = status.message,
     comment = comment,
     codeLink = codeLink,
 )
