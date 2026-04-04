@@ -37,7 +37,8 @@ internal val sketches = listOf(
         pkg = Package.OPENRNDR,
         docLink = "${GUIDE_ROOT}drawing/color.html#color-operations",
         status = SketchStatus.PARTIAL,
-        comment = "BUG: Colors are not rendering correctly",
+        statusMessage = "Colors are not rendering correctly",
+        statusLinks = listOf("https://github.com/openrndr/openrndr/issues/454"),
     ),
     SketchData(
         navTitle = "Color Models",
@@ -47,7 +48,8 @@ internal val sketches = listOf(
         pkg = Package.OPENRNDR,
         docLink = "${GUIDE_ROOT}drawing/color.html#alternative-color-models",
         status = SketchStatus.PARTIAL,
-        comment = "BUG: Colors are not rendering correctly",
+        statusMessage = "Colors are not rendering correctly",
+        statusLinks = listOf("https://github.com/openrndr/openrndr/issues/454"),
     ),
     /* CAMERA */
     SketchData(
@@ -77,7 +79,7 @@ internal val sketches = listOf(
         pkg = Package.ORXCOMPOSITION,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-composition#democompositiondrawer01",
         status = SketchStatus.PARTIAL,
-        comment = "ISSUE: No SVG file save. orx-svg has Java dependencies",
+        statusMessage = "No SVG file save. orx-svg has Java dependencies",
     ),
     SketchData(
         navTitle = "ClipMode 1",
@@ -105,7 +107,7 @@ internal val sketches = listOf(
         pkg = Package.ORXCOMPOSITION,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-composition#democompositiondrawer04",
         status = SketchStatus.GOOD,
-        comment = "Click and drag mouse button to add circles. Right-click to clear composition.",
+        userMessage = "Click and drag mouse button to add circles. Right-click to clear composition.",
     ),
     /* COMPOSITOR */
     SketchData(
@@ -115,8 +117,8 @@ internal val sketches = listOf(
         funcName = "DemoAside01",
         pkg = Package.ORXCOMPOSITOR,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-compositor#demoaside01",
-        status = SketchStatus.PARTIAL,
-        comment = "ISSUES: Comparable to JVM version on ipad. Grainier and darker on 1080p screen.",
+        status = SketchStatus.BROKEN,
+        statusMessage = """Failed after merge of Wasm code into master.""",
     ),
     SketchData(
         navTitle = "Layered Blurs",
@@ -125,8 +127,11 @@ internal val sketches = listOf(
         funcName = "DemoCompositor01",
         pkg = Package.ORXCOMPOSITOR,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-compositor#democompositor01",
-        status = SketchStatus.GOOD,
-        comment = "",
+        status = SketchStatus.BROKEN,
+        statusMessage = """
+            Failed after merge of Wasm code into master.<br>Console reports: GL_INVALID_OPERATION: 
+            glDrawArrays: Feedback loop formed between Framebuffer and active Texture.
+            """,
     ),
     SketchData(
         navTitle = "BufferMultisample",
@@ -136,7 +141,6 @@ internal val sketches = listOf(
         pkg = Package.ORXCOMPOSITOR,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-compositor#democompositor02",
         status = SketchStatus.BROKEN,
-        comment = "Bug: Nothing drawn",
     ),
     /* EASING */
     SketchData(
@@ -147,7 +151,10 @@ internal val sketches = listOf(
         pkg = Package.ORXEASING,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-easing",
         status = SketchStatus.PARTIAL,
-        comment = "Text labelling is not implemented",
+        statusMessage = """
+            Sketch dynamic behaviour functions fully. However, text labelling is 
+            not implemented in WebGL yet and therefore the output does not match
+            the JVM version of the demo."""
     ),
     /* MATH */
     SketchData(
@@ -158,7 +165,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#linearrangedemolinearrange02",
         status = SketchStatus.GOOD,
-        comment = "",
     ),
     SketchData(
         navTitle = "Linear Range 3",
@@ -168,7 +174,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#linearrangedemolinearrange03",
         status = SketchStatus.GOOD,
-        comment = "",
     ),
     SketchData(
         navTitle = "Least Squares 1",
@@ -178,7 +183,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#matrixdemoleastsquares01",
         status = SketchStatus.GOOD,
-        comment = "",
     ),
     SketchData(
         navTitle = "Least Squares 2",
@@ -188,7 +192,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#matrixdemoleastsquares02",
         status = SketchStatus.GOOD,
-        comment = "",
     ),
     SketchData(
         navTitle = "RBF 1",
@@ -198,7 +201,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#rbfrbfinterpolation01",
         status = SketchStatus.BROKEN,
-        comment = "BUG: Blank screen",
     ),
     SketchData(
         navTitle = "RBF 2",
@@ -208,6 +210,6 @@ internal val sketches = listOf(
         pkg = Package.ORXMATH,
         docLink = "https://github.com/openrndr/orx/tree/master/orx-math#rbfrbfinterpolation02",
         status = SketchStatus.BROKEN,
-        comment = "BUG: Mouse position off. Probably due to offset canvas. ",
+        statusMessage = "Console reports: INVALID_OPERATION: uniform3fv: location is not from the associated program",
     ),
 )

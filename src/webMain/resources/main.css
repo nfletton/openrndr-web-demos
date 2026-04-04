@@ -262,7 +262,7 @@ body.nav-collapsed .nav :is(h1, .groups) {
     display: inline-flex;
     gap: 8px;
 }
-.infobar-comment {
+.infobar-message {
     width: 100%;
     text-align: center;
 }

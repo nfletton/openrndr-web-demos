@@ -7,7 +7,9 @@ internal data class SketchData(
     val pkg: Package,
     val docLink: String,
     val status: SketchStatus = SketchStatus.BROKEN,
-    val comment: String = "",
+    val statusMessage:String = "",
+    val statusLinks:List<String> = emptyList(),
+    val userMessage: String = "",
 ) {
 
     val funcId: String by lazy {

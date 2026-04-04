@@ -271,10 +271,10 @@ export function initUI(sketchJson, webTarget) {
             }
         }
 
-        if (sketch && sketch.comment) {
-            const commentEl = document.getElementById('comment');
-            if (commentEl) {
-                commentEl.textContent = sketch.comment;
+        if (sketch && sketch.userMessage) {
+            const messageEl = document.getElementById('message');
+            if (messageEl) {
+                messageEl.textContent = sketch.userMessage;
             }
         }
 
@@ -282,6 +282,8 @@ export function initUI(sketchJson, webTarget) {
         if (sketch && statusInfoContent) {
             statusInfoContent.innerHTML = `
                 <div style="margin-bottom: 4px;"><strong>Status:</strong> ${sketch.status}</div>
+                ${sketch.statusMessage ? `<div>${sketch.statusMessage}</div>` : ''}
+                ${sketch.statusLinks ? sketch.statusLinks.map(link => `<div><a href="${link}" target="_blank">${link}</a></div>`).join('') : ''}
             `;
         }
     }
