@@ -1,4 +1,4 @@
-package orxcamera
+package demos.orxcamera
 
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa

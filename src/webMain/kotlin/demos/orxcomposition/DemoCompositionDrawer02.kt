@@ -1,4 +1,4 @@
-package orxcomposition
+package demos.orxcomposition
 
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa

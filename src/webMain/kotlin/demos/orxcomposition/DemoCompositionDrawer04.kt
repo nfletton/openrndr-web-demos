@@ -1,4 +1,4 @@
-package orxcomposition
+package demos.orxcomposition
 
 import org.openrndr.MouseButton
 import org.openrndr.application
