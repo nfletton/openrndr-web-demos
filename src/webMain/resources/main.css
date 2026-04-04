@@ -19,7 +19,7 @@ body {
     height: 100dvh;
     max-height: 100dvh;
     display: grid;
-    grid-template-rows: auto 1fr; /* header + main + statusbar */
+    grid-template-rows: auto 1fr; /* header + main + infobar */
 }
 
 /* Root split container */
@@ -103,7 +103,7 @@ body {
     color: var(--text);
     background: light-dark(#ffffff, #151922);
 }
-.nav a:hover, .nav a:focus-visible, .nav a.active, .statusbar-target button.active {
+.nav a:hover, .nav a:focus-visible, .nav a.active, .infobar-target button.active {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 80%);
@@ -153,7 +153,7 @@ header.topbar {
     display: inline-flex;
     gap: 8px;
 }
-.topbar-actions button, .topbar-info button, .topbar-center button, .statusbar-target button {
+.topbar-actions button, .topbar-info button, .topbar-center button, .infobar-target button {
     appearance: none;
     border: 1px solid var(--border);
     background: light-dark(#ffffff, #151922);
@@ -164,7 +164,7 @@ header.topbar {
     line-height: 1;
     font-size: 14px;
 }
-.topbar-actions button:hover, .topbar-actions button:focus-visible, .topbar-info button:hover, .topbar-info button:focus-visible, .topbar-center button:hover, .topbar-center button:focus-visible, .statusbar-target button:hover, .statusbar-target button:focus-visible {
+.topbar-actions button:hover, .topbar-actions button:focus-visible, .topbar-info button:hover, .topbar-info button:focus-visible, .topbar-center button:hover, .topbar-center button:focus-visible, .infobar-target button:hover, .infobar-target button:focus-visible {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 80%);
@@ -175,7 +175,7 @@ header.topbar {
     box-shadow: none;
 }
 
-.statusbar-target button:disabled {
+.infobar-target button:disabled {
     cursor: not-allowed;
 }
 /* Collapsed sidebar state */
@@ -245,8 +245,8 @@ body.nav-collapsed .nav :is(h1, .groups) {
     background: var(--muted);
 }
 
-/* Status bar */
-.statusbar {
+/* Info bar */
+.infobar {
     display: flex;
     align-items: center;
     padding: 6px 12px;
@@ -258,11 +258,11 @@ body.nav-collapsed .nav :is(h1, .groups) {
     gap: 12px;
 
 }
-.statusbar-target {
+.infobar-target {
     display: inline-flex;
     gap: 8px;
 }
-.statusbar-comment {
+.infobar-comment {
     width: 100%;
     text-align: center;
 }
