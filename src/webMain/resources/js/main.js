@@ -7,19 +7,30 @@ export function initUI(sketchJson, webTarget) {
     const statusVisCookie = 'statusHidden';
     const navWidthCookie = 'navWidth';
     const defaultNavWidth = '240px';
+    const statusFilterCookie = 'statusFilter';
+    const defaultStatusFilter = ['GOOD', 'PARTIAL'];
     let navWidth = defaultNavWidth;
+    let selectedStatuses = defaultStatusFilter;
 
     const nav = document.getElementById('sidebar');
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+        if (parts.length === 2) {
+            const val = parts.pop().split(';').shift();
+            try {
+                return JSON.parse(decodeURIComponent(val));
+            } catch (e) {
+                return val;
+            }
+        }
         return null;
     }
 
     function setCookie(name, value) {
-        document.cookie = `${name}=${value}; path=/; SameSite=Lax`;
+        const cookieValue = typeof value === 'string' ? value : encodeURIComponent(JSON.stringify(value));
+        document.cookie = `${name}=${cookieValue}; path=/; SameSite=Lax`;
     }
 
     function setNavGroupOpenState(targetGroup) {
@@ -59,13 +70,15 @@ export function initUI(sketchJson, webTarget) {
     }
 
     function initNavLinks(sketchData) {
-        const nav = document.createElement('div');
-        nav.className = 'groups';
-        nav.setAttribute('role', 'tree');
+        const navContainer = document.createElement('div');
+        navContainer.className = 'groups';
+        navContainer.setAttribute('role', 'tree');
 
         let sketchIndex = 0
         Object.keys(sketchData).forEach(groupName => {
-            const groupData = sketchData[groupName];
+            const groupData = sketchData[groupName].filter(sketch => selectedStatuses.includes(sketch.status));
+            if (groupData.length === 0) return;
+
             const details = document.createElement('details');
             details.className = 'group';
             details.setAttribute('role', 'treeitem');
@@ -96,16 +109,66 @@ export function initUI(sketchJson, webTarget) {
             });
 
             details.appendChild(ul);
-            nav.appendChild(details);
+            navContainer.appendChild(details);
         });
 
-        return nav;
+        return navContainer;
+    }
+
+    function initStatusFilter(sketchData) {
+        const filterContainer = document.getElementById('status-filter');
+        if (!filterContainer) return;
+
+        const statuses = ['GOOD', 'PARTIAL', 'BROKEN'];
+        const labels = {
+            'GOOD': 'Good',
+            'PARTIAL': 'Partial',
+            'BROKEN': 'Broken'
+        };
+
+        statuses.forEach(status => {
+            const label = document.createElement('label');
+            label.className = 'status-filter-item';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = status;
+            checkbox.checked = selectedStatuses.includes(status);
+
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedStatuses.push(status);
+                } else {
+                    selectedStatuses = selectedStatuses.filter(s => s !== status);
+                }
+                setCookie(statusFilterCookie, selectedStatuses);
+
+                // Re-render nav links
+                const oldGroups = nav.querySelector('.groups');
+                if (oldGroups) {
+                    nav.replaceChild(initNavLinks(sketchData), oldGroups);
+                }
+                links = Array.from(nav.querySelectorAll('a[href]'));
+
+                // Re-select active item if it's still visible
+                const urlParams = new URLSearchParams(window.location.search);
+                const activeNavId = urlParams.get('sketch');
+                if (activeNavId) {
+                    setActiveNavItem(activeNavId);
+                }
+            });
+
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(labels[status]));
+            filterContainer.appendChild(label);
+        });
     }
 
     function initNavStatus() {
         const newNavWidth = getCookie(navWidthCookie) ?? defaultNavWidth;
         const newNavHidden = getCookie(navVisCookie) ?? 'false';
         const newStatusHidden = getCookie(statusVisCookie) ?? 'true';
+        const newStatusFilter = getCookie(statusFilterCookie) ?? defaultStatusFilter;
 
         if (newNavWidth !== navWidth) {
             navWidth = newNavWidth;
@@ -120,6 +183,11 @@ export function initUI(sketchJson, webTarget) {
         if (newStatusHidden !== statusHidden) {
             statusHidden = newStatusHidden;
             setCookie(statusVisCookie, statusHidden);
+        }
+
+        if (JSON.stringify(newStatusFilter) !== JSON.stringify(selectedStatuses)) {
+            selectedStatuses = Array.isArray(newStatusFilter) ? newStatusFilter : defaultStatusFilter;
+            setCookie(statusFilterCookie, selectedStatuses);
         }
 
         nav.style.width = navWidth;
@@ -151,15 +219,15 @@ export function initUI(sketchJson, webTarget) {
             console.error('Failed to parse sketch data', e);
         }
 
-        nav.appendChild(initNavLinks(sketchData))
-
-        initNavStatus()
-
-        links = Array.from(nav.querySelectorAll('a[href]'));
-
         const btnPrev = document.getElementById('navPrev');
         const btnNext = document.getElementById('navNext');
         const btnToggle = document.getElementById('toggleSidebar');
+
+        initNavStatus()
+        initStatusFilter(sketchData)
+        nav.appendChild(initNavLinks(sketchData))
+
+        links = Array.from(nav.querySelectorAll('a[href]'));
 
         const urlParams = new URLSearchParams(window.location.search);
         const activeNavId = urlParams.get('sketch');
@@ -281,7 +349,7 @@ export function initUI(sketchJson, webTarget) {
         const statusInfoContent = document.querySelector('.status-info-content');
         if (sketch && statusInfoContent) {
             statusInfoContent.innerHTML = `
-                <div style="margin-bottom: 4px;"><strong>Status:</strong> ${sketch.status}</div>
+                <div style="margin-bottom: 4px;"><strong>Status:</strong> ${sketch.statusDescription}</div>
                 ${sketch.statusMessage ? `<div>${sketch.statusMessage}</div>` : ''}
                 ${sketch.statusLinks ? sketch.statusLinks.map(link => `<div><a href="${link}" target="_blank">${link}</a></div>`).join('') : ''}
             `;

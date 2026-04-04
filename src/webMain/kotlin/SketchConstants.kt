@@ -1,6 +1,6 @@
 import kotlinx.serialization.Serializable
 
-internal enum class SketchStatus(val message: String) {
+internal enum class SketchStatus(val description: String) {
     HIDDEN("Hidden"),
     GOOD("Fully functional"),
     PARTIAL("Partial functionality"),

@@ -22,6 +22,7 @@ private data class SketchDto(
     val title: String,
     val docLink: String,
     val status: String,
+    val statusDescription: String,
     val statusMessage: String,
     val statusLinks: List<String>,
     val userMessage: String,
@@ -32,7 +33,7 @@ private data class SketchDto(
 private val visibleSketches: List<SketchData> by lazy {
     sketches.asSequence()
         .filter { it.status != SketchStatus.HIDDEN}
-        .sortedWith(compareBy { it.pkg.ordinal })
+        .sortedWith(compareBy({ it.pkg.ordinal }, { it.navTitle }))
         .toList()
 }
 
@@ -58,7 +59,8 @@ private fun SketchData.toDto(): SketchDto = SketchDto(
     navTitle = navTitle,
     title = title,
     docLink = docLink,
-    status = status.message,
+    status = status.name,
+    statusDescription = status.description,
     statusMessage = statusMessage,
     statusLinks = statusLinks,
     userMessage = userMessage,
