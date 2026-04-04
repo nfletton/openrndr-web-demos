@@ -141,6 +141,14 @@ export function initUI(sketchJson, webTarget) {
                 } else {
                     selectedStatuses = selectedStatuses.filter(s => s !== status);
                 }
+
+                if (selectedStatuses.length === 0) {
+                    selectedStatuses = ['GOOD'];
+                    const goodCheckbox = filterContainer.querySelector('input[value="GOOD"]');
+                    if (goodCheckbox) {
+                        goodCheckbox.checked = true;
+                    }
+                }
                 setCookie(statusFilterCookie, selectedStatuses);
 
                 // Re-render nav links
