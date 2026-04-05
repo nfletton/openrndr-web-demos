@@ -1,0 +1,85 @@
+name: Release web page
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout OPENRNDR repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          repository: openrndr/openrndr
+          path: ./openrndr
+          ref: master
+
+      - name: Checkout ORX repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          repository: openrndr/orx
+          path: ./orx
+          ref: master
+
+      - name: Checkout current repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          repository: nfletton/openrndr-web-demos
+          path: ./demos
+          ref: master
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Set swap space
+        uses: pierotofy/set-swap-space@v1.0
+        with:
+          swap-size-gb: 8
+
+      - name: Build OPENRNDR
+        working-directory: ./openrndr
+        run: ./gradlew publishToMavenLocal snapshot
+
+      - name: Build ORX
+        working-directory: ./orx
+        run: ./gradlew publishToMavenLocal snapshot
+
+      - name: Build production JS and WASM demo web pages
+        working-directory: ./demos
+        run: ./gradlew jsBrowserDistribution wasmJsBrowserDistribution
+
+      - name: Publish to gh-pages
+        run: |
+          cd demos
+          echo "Initial dir: $(pwd)"
+          echo "Contents: $(ls)"
+          git worktree add --detach docs-temp
+          cd docs-temp
+          git checkout --orphan gh-pages
+          git reset HEAD -- .
+          git clean -df
+          
+          mkdir js
+          mv ../build/dist/js/productionExecutable/* js
+
+          mkdir wasm
+          mv ../build/dist/wasmJs/productionExecutable/* wasm
+          
+          cp ../docs/* .
+
+          git status
+          git config --global user.email "actions@openrndr.org"
+          git config --global user.name "OPENRNDR Actions"
+          git add . 
+          git commit -m "Add automatically generated web page"
+          git push origin gh-pages --force

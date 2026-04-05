@@ -293,14 +293,14 @@ export function initUI(sketchJson, webTarget) {
             btnJs.disabled = true;
             btnWasm.disabled = false;
             btnWasm.addEventListener('click', () => {
-                document.location.href = document.location.href.replace("js.", "wasm.");
+                document.location.href = document.location.href.replace("/js/", "/wasm/");
             });
         } else {
             btnWasm.classList.add('active');
             btnJs.disabled = false;
             btnWasm.disabled = true;
             btnJs.addEventListener('click', () => {
-                document.location.href = document.location.href.replace("wasm.", "js.");
+                document.location.href = document.location.href.replace("/wasm/", "/js/");
             });
         }
 

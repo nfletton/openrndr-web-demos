@@ -16,4 +16,4 @@ jobs:
           cache: gradle
 
       - name: Build template
-        run: ./gradlew wasmJsBrowserDistribution
+        run: ./gradlew jsBrowserDistribution
