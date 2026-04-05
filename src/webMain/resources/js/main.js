@@ -1,8 +1,8 @@
 export function initUI(sketchJson, webTarget) {
     let links;
     let activeLink = null;
-    let navHidden = 'true';
-    let statusHidden = 'true';
+    let navHidden = false;
+    let statusHidden = true;
     const navVisCookie = 'navHidden';
     const statusVisCookie = 'statusHidden';
     const navWidthCookie = 'navWidth';
@@ -14,7 +14,7 @@ export function initUI(sketchJson, webTarget) {
 
     const nav = document.getElementById('sidebar');
 
-    function getCookie(name) {
+    function getCookie(name, defaultValue = null) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) {
@@ -25,7 +25,7 @@ export function initUI(sketchJson, webTarget) {
                 return val;
             }
         }
-        return null;
+        return defaultValue;
     }
 
     function setCookie(name, value) {
@@ -172,11 +172,15 @@ export function initUI(sketchJson, webTarget) {
         });
     }
 
+    function getToggleBtnIcon() {
+        return statusHidden ? '▲' : '▼';
+    }
+
     function initNavStatus() {
-        const newNavWidth = getCookie(navWidthCookie) ?? defaultNavWidth;
-        const newNavHidden = getCookie(navVisCookie) ?? 'false';
-        const newStatusHidden = getCookie(statusVisCookie) ?? 'true';
-        const newStatusFilter = getCookie(statusFilterCookie) ?? defaultStatusFilter;
+        const newNavWidth = getCookie(navWidthCookie, defaultNavWidth);
+        const newNavHidden = getCookie(navVisCookie, navHidden);
+        const newStatusHidden = getCookie(statusVisCookie, statusHidden);
+        const newStatusFilter = getCookie(statusFilterCookie, defaultStatusFilter);
 
         if (newNavWidth !== navWidth) {
             navWidth = newNavWidth;
@@ -201,7 +205,7 @@ export function initUI(sketchJson, webTarget) {
         nav.style.width = navWidth;
         nav.setAttribute('aria-hidden', navHidden);
 
-        if (navHidden === 'true') {
+        if (navHidden) {
             document.body.classList.add('nav-collapsed');
             nav.classList.remove('visible');
         } else {
@@ -214,7 +218,7 @@ export function initUI(sketchJson, webTarget) {
             statusInfo.setAttribute('aria-hidden', statusHidden);
             const toggleBtn = document.getElementById('toggleStatusInfo');
             if (toggleBtn) {
-                toggleBtn.textContent = statusHidden === 'true' ? '▲' : '▼';
+                toggleBtn.textContent = getToggleBtnIcon();
             }
         }
     }
@@ -256,16 +260,16 @@ export function initUI(sketchJson, webTarget) {
 
         // Sidebar toggle
         btnToggle?.addEventListener('click', () => {
-            navHidden = navHidden === 'true' ? 'false' : 'true';
-            if (navHidden === 'true') {
+            navHidden = !navHidden;
+            if (navHidden) {
                 document.body.classList.add('nav-collapsed');
                 nav.classList.remove('visible');
             } else {
                 document.body.classList.remove('nav-collapsed');
                 nav.classList.add('visible');
             }
-            nav.setAttribute('aria-hidden',navHidden);
-            btnToggle.title = (navHidden === 'true') ? 'Expand sidebar' : 'Collapse sidebar';
+            nav.setAttribute('aria-hidden', navHidden);
+            btnToggle.title = navHidden ? 'Expand sidebar' : 'Collapse sidebar';
             btnToggle.setAttribute('aria-label', btnToggle.title);
             btnToggle.setAttribute('title', btnToggle.title);
             setCookie(navVisCookie, navHidden);
@@ -275,9 +279,9 @@ export function initUI(sketchJson, webTarget) {
         const btnToggleStatus = document.getElementById('toggleStatusInfo');
         const statusInfo = document.getElementById('status-info');
         btnToggleStatus?.addEventListener('click', () => {
-            statusHidden = !statusHidden
+            statusHidden = !statusHidden;
             statusInfo?.setAttribute('aria-hidden', statusHidden);
-            btnToggleStatus.textContent = statusHidden === 'true' ? '▲' : '▼';
+            btnToggleStatus.textContent = getToggleBtnIcon();
             setCookie(statusVisCookie, statusHidden);
         });
 
