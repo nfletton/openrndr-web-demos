@@ -14,7 +14,7 @@ bridging overhead necessary for the Wasm runtime to access WebGL via JavaScript.
 
 ## Live demo
 
-A live example of this project can be found at https://wasm.zygal.com/.
+A live example of this project can be found at https://nfletton.github.io/openrndr-web-demos/.
 
 ## Developing
 
@@ -65,8 +65,8 @@ These commands will place the resulting production files into the
 
 ## TODOs / Potentials
 - [ ] Add more demos, of course.
-- [ ] Switch back to GitHub pages and use Abe's workflow to get both targets built and deployed automatically.
+- [x] Switch back to GitHub pages and use Abe's workflow to get both targets built and deployed automatically.
 - [ ] Canvas looks to have a resizing issue on page load. Not visible when the navigation bar is at its default width, but when it has been widened, there's a distinct reload of the canvas going on.
-- [ ] Add additional status text indicating any known issues with the demo compared to the JVM version.
+- [x] Add additional status text indicating any known issues with the demo compared to the JVM version.
 - [ ] Load first sketch if no `sketch` parameter in URL
 - [ ] ~~Link to the original JVM demo code as well as the web version currently linked to~~. Not necessary as the code accessible via the documentation link.

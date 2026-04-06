@@ -75,7 +75,7 @@ jobs:
           mkdir wasm
           mv ../build/dist/wasmJs/productionExecutable/* wasm
           
-          cp ../docs/* .
+          cp ../gh-pages/index.html ../gh-pages/favicon.ico .
 
           git status
           git config --global user.email "actions@openrndr.org"
