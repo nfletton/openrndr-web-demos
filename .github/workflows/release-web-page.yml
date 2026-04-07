@@ -59,10 +59,8 @@ jobs:
         run: ./gradlew jsBrowserDistribution wasmJsBrowserDistribution
 
       - name: Publish to gh-pages
+        working-directory: ./demos
         run: |
-          cd demos
-          echo "Initial dir: $(pwd)"
-          echo "Contents: $(ls)"
           git worktree add --detach docs-temp
           cd docs-temp
           git checkout --orphan gh-pages
