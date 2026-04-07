@@ -6,6 +6,7 @@ import org.openrndr.extra.easing.Easing
 import org.openrndr.extra.shapes.primitives.grid
 import org.openrndr.math.Vector2
 import org.openrndr.shape.Rectangle
+import kotlin.enums.enumEntries
 
 /**
  * # Visualizes Easing types as a graph and as motion.
@@ -33,7 +34,7 @@ fun DemoEasings01() = application {
 
         val samples = 40
 
-        fun createPlots(): List<Plot> = enumValues<Easing>().toList()
+        fun createPlots(): List<Plot> = enumEntries<Easing>()
             .zip(grid)
             .map { (easing, rect) ->
                 val pts = List(samples) { i ->
