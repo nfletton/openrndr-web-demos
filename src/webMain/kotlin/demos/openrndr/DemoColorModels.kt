@@ -1,7 +1,11 @@
 package demos.openrndr
 
+import demos.BACKGROUND_COLOR
 import org.openrndr.application
-import org.openrndr.color.*
+import org.openrndr.color.ColorHSLa
+import org.openrndr.color.ColorHSVa
+import org.openrndr.color.ColorXSLa
+import org.openrndr.color.ColorXSVa
 import org.openrndr.extra.shapes.primitives.grid
 import org.openrndr.shape.Rectangle
 
@@ -25,7 +29,7 @@ fun DemoColorModels() {
                 val cellWidth = grid[0][0].width
                 val cellHeight = grid[0][0].height
 
-                drawer.clear(ColorRGBa.BLACK)
+                drawer.clear(BACKGROUND_COLOR)
 
                 /* COLORS MODELS */
                 drawer.stroke = null

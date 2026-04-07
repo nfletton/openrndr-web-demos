@@ -1,6 +1,6 @@
 package demos.openrndr
 
-import demos.spannedCell
+import demos.*
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.LineCap
@@ -28,57 +28,57 @@ fun DemoBasicDraw() {
             }
 
             extend {
-                drawer.clear(ColorRGBa.BLACK)
+                drawer.clear(BACKGROUND_COLOR)
 
                 /* CIRCLES */
                 var cell = grid[0][0]
                 val circleRadius = if (cell.width < cell.height) cell.width / 2.0 else cell.height / 2.0
                 // -- draw a circle with pink fill and white stroke
-                drawer.stroke = ColorRGBa.WHITE
+                drawer.stroke = LINE_COLOR1
                 drawer.fill = ColorRGBa.PINK
-                drawer.strokeWeight = 1.0
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.circle(cell.center, circleRadius)
 
                 cell = grid[0][1]
                 // -- draw a circle without a fill, but with white stroke
-                drawer.stroke = ColorRGBa.WHITE
+                drawer.stroke = LINE_COLOR1
                 drawer.fill = null
-                drawer.strokeWeight = 1.0
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.circle(cell.center, circleRadius)
 
                 cell = grid[0][2]
                 // -- draw a circle with pink fill, but without a stroke
                 drawer.stroke = null
                 drawer.fill = ColorRGBa.PINK
-                drawer.strokeWeight = 1.0
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.circle(cell.center, circleRadius)
 
                 /* RECTANGLES */
                 // -- draw rectangle with pink fill and white stroke
                 cell = grid[1][0]
                 drawer.fill = ColorRGBa.PINK
-                drawer.stroke = ColorRGBa.WHITE
-                drawer.strokeWeight = 1.0
+                drawer.stroke = LINE_COLOR1
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.rectangle(cell.corner, cell.width, cell.height)
 
                 // -- draw rectangle without fill, but with white stroke
                 cell = grid[1][1]
                 drawer.fill = null
-                drawer.stroke = ColorRGBa.WHITE
-                drawer.strokeWeight = 1.0
+                drawer.stroke = LINE_COLOR1
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.rectangle(cell.corner, cell.width, cell.height)
 
                 // -- draw a rectangle with pink fill, but without stroke
                 cell = grid[1][2]
                 drawer.fill = ColorRGBa.PINK
                 drawer.stroke = null
-                drawer.strokeWeight = 1.0
+                drawer.strokeWeight = LINE_WIDTH
                 drawer.rectangle(cell.corner, cell.width, cell.height)
 
                 /* LINES */
                 // -- setup line appearance
-                drawer.stroke = ColorRGBa.WHITE
-                drawer.strokeWeight = 5.0
+                drawer.stroke = LINE_COLOR1
+                drawer.strokeWeight = LINE_WIDTH_THICK
                 drawer.lineCap = LineCap.ROUND
 
                 cell = Rectangle(grid[2][0].corner, (cell.width * columns) + (margin * (columns - 1)), cell.height)
@@ -101,8 +101,8 @@ fun DemoBasicDraw() {
 
                 /* LINE STRIP */
                 // -- setup line appearance
-                drawer.stroke = ColorRGBa.WHITE
-                drawer.strokeWeight = 5.0
+                drawer.stroke = LINE_COLOR1
+                drawer.strokeWeight = LINE_WIDTH_THICK
                 drawer.lineCap = LineCap.ROUND
 
                 cell = spannedCell(grid[3][0], grid[3][columns - 1])
@@ -115,7 +115,7 @@ fun DemoBasicDraw() {
 
                 /* LINE LOOP */
                 drawer.lineCap = LineCap.BUTT
-                drawer.strokeWeight = 2.0
+                drawer.strokeWeight = LINE_WIDTH_THICK
 
                 val shiftedPoints = points.map { it + Vector2(0.0, cell.height + margin) }
                 drawer.lineLoop(shiftedPoints)

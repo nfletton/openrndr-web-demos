@@ -1,5 +1,7 @@
 package demos.openrndr
 
+import demos.BACKGROUND_COLOR
+import demos.GRID_MARGIN
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.mix
@@ -16,7 +18,7 @@ fun DemoColor() {
             val margin = 40.0
             val gutter = 40.0
             fun createGrid() = drawer.bounds.grid(
-                columns, rows, margin, margin, gutter, gutter * 2
+                columns, rows, GRID_MARGIN, GRID_MARGIN, gutter, gutter * 2
             )
 
             var grid: List<List<Rectangle>> = createGrid()
@@ -28,7 +30,7 @@ fun DemoColor() {
                 val cellWidth = grid[0][0].width
                 val cellHeight = grid[0][0].height
 
-                drawer.clear(ColorRGBa.BLACK)
+                drawer.clear(BACKGROUND_COLOR)
 
                 /* COLORS */
                 // shades
