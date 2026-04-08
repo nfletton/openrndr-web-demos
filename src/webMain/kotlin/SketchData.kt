@@ -17,6 +17,6 @@ internal data class SketchData(
     }
 
     val codeLink: String by lazy {
-        "$EXAMPLES_ROOT/${pkg.toString().lowercase()}/$funcName.kt"
+        "$DEMOS_ROOT/${pkg.toString().lowercase()}/$funcName.kt"
     }
 }
