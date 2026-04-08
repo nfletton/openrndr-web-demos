@@ -1,11 +1,10 @@
 package data
 
 import GUIDE_ROOT
+import Package
 import SketchData
-import demos.openrndr.DemoBasicDraw
-import demos.openrndr.DemoCurvesShapes
-import demos.openrndr.DemoColor
-import demos.openrndr.DemoColorModels
+import SketchStatus
+import demos.openrndr.*
 
 internal val sketchesOPENRNDR = listOf(
     SketchData(
@@ -40,10 +39,21 @@ internal val sketchesOPENRNDR = listOf(
         statusLinks = listOf("https://github.com/openrndr/openrndr/issues/454"),
     ),
     SketchData(
-        navTitle = "Curves & Shapes",
-        title = "Curves & Shape Basics",
-        function = ::DemoCurvesShapes,
-        funcName = "DemoCurvesShapes",
+        navTitle = "Curves & Shapes 1",
+        title = "Curves & Shapes One",
+        function = ::DemoCurvesShapes1,
+        funcName = "DemoCurvesShapes1",
+        pkg = Package.OPENRNDR,
+        docLink = "${GUIDE_ROOT}drawing/curvesAndShapes.html",
+        status = SketchStatus.GOOD,
+//        statusMessage = "Colors are not rendering correctly",
+//        statusLinks = listOf("https://github.com/openrndr/openrndr/issues/454"),
+    ),
+    SketchData(
+        navTitle = "Curves & Shapes 2",
+        title = "Curves & Shapes Two",
+        function = ::DemoCurvesShapes2,
+        funcName = "DemoCurvesShapes2",
         pkg = Package.OPENRNDR,
         docLink = "${GUIDE_ROOT}drawing/curvesAndShapes.html",
         status = SketchStatus.GOOD,

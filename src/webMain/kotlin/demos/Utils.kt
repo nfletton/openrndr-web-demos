@@ -6,20 +6,19 @@ import org.openrndr.draw.isolated
 import org.openrndr.shape.Rectangle
 
 /*
---color-tri-1: #21d633;
---color-tri-2: #004f00;
---color-tri-3: #2965f9;
---color-tri-4: #1740a5;
---color-tri-5: #c9001a;
---color-tri-6: #d65151;
- */
+Highlight colors:
+https://colorpalette.pro/?color=%2321d633&paletteType=tri&paletteStyle=square&colorFormat=hex&effects=0%2C0%2C0%2C0
+
+https://colorpalette.pro/?color=%23add6d4&paletteType=ana&paletteStyle=square&colorFormat=hex&effects=0%2C0%2C0%2C0
+*/
 val CELL_BORDER_COLOR = ColorRGBa.fromHex("#add6d4")
 val POINT_COLOR = ColorRGBa.fromHex("#21d633")
-val SEGMENT_COLOR = ColorRGBa.fromHex("#00ff00")
 val LINE_COLOR1 = ColorRGBa.fromHex("#ffffff")
-val LINE_COLOR2 = ColorRGBa.fromHex("#d65151")
+val LINE_COLOR2 = ColorRGBa.fromHex("#c9001a")
 val BACKGROUND_COLOR = ColorRGBa.fromHex("#0a0d14")
+val FILL_COLOR = ColorRGBa.fromHex("#cde1e8")
 
+val LINE_WIDTH_THIN = 1.0
 val LINE_WIDTH = 2.0
 val LINE_WIDTH_THICK = 5.0
 val POINT_RADIUS = 3.0
