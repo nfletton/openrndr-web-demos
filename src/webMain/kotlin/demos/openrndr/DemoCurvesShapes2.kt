@@ -9,6 +9,7 @@ import org.openrndr.extra.shapes.rectify.rectified
 import org.openrndr.math.Vector2
 import org.openrndr.shape.Circle
 import org.openrndr.shape.Rectangle
+import org.openrndr.shape.compound
 import kotlin.math.PI
 import kotlin.math.cos
 
@@ -80,9 +81,45 @@ fun DemoCurvesShapes2() {
                 drawBorder(drawer, cell)
                 // Contour builder
                 drawer.isolated {
-                    drawer.stroke = null
+                    drawer.stroke = LINE_COLOR1
+                    drawer.strokeWeight = LINE_WIDTH_THIN
                     drawer.fill = FILL_COLOR
-//                    drawer.contour(contour)
+
+                    val radius = cell.height * 0.25
+                    val col1x = cell.position(0.2, 0.0).x
+                    val col2x = cell.center.x
+                    val col3x = cell.position(0.78, 0.0).x
+                    val rowOffset = radius * 0.7
+                    val row2y = cell.center.y
+                    val row1y = row2y - rowOffset
+                    val row3y = row2y + rowOffset
+
+                    // -- shape union
+                    val su = compound {
+                        union {
+                            shape(Circle(col1x, row1y, radius).shape)
+                            shape(Circle(col1x, row3y, radius).shape)
+                        }
+                    }
+                    drawer.shapes(su)
+
+                    // -- shape difference
+                    val sd = compound {
+                        difference {
+                            shape(Circle(col2x, row1y, radius).shape)
+                            shape(Circle(col2x, row3y, radius).shape)
+                        }
+                    }
+                    drawer.shapes(sd)
+
+                    // -- shape intersection
+                    val si = compound {
+                        intersection {
+                            shape(Circle(col3x, row1y, radius).shape)
+                            shape(Circle(col3x, row3y, radius).shape)
+                        }
+                    }
+                    drawer.shapes(si)
                 }
 
                 cell = grid[0][2]

@@ -16,7 +16,7 @@ val POINT_COLOR = ColorRGBa.fromHex("#21d633")
 val LINE_COLOR1 = ColorRGBa.fromHex("#ffffff")
 val LINE_COLOR2 = ColorRGBa.fromHex("#c9001a")
 val BACKGROUND_COLOR = ColorRGBa.fromHex("#0a0d14")
-val FILL_COLOR = ColorRGBa.fromHex("#cde1e8")
+val FILL_COLOR = ColorRGBa.fromHex("#79958c")
 
 val LINE_WIDTH_THIN = 1.0
 val LINE_WIDTH = 2.0
