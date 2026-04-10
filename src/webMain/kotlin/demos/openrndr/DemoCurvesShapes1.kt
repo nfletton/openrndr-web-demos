@@ -9,6 +9,7 @@ import org.openrndr.extra.shapes.primitives.grid
 import org.openrndr.math.Vector2
 import org.openrndr.shape.*
 import kotlin.math.cos
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
@@ -213,10 +214,10 @@ fun DemoCurvesShapes1() {
                     val point = Circle(
                         cell.corner.x + cell.width * 0.18, cell.center.y, radius
                     ).contour.position((seconds * 0.1) % 1.0)
-                    val points0 = Circle(cell.center, radius).contour.equidistantPositions((cell.height / 8).toInt())
+                    val points0 = Circle(cell.center, radius).contour.equidistantPositions(pointCount = max(1.0, (cell.height / 8)).toInt())
                     val points1 =
                         Circle(cell.corner.x + cell.width * 0.82, cell.center.y, radius).contour.equidistantPositions(
-                            (cos(seconds) * 10.0 + 20.0).toInt()
+                            max(1.0, (cos(seconds) * 10.0 + 20.0)).toInt()
                         )
 
                     drawer.stroke = null
