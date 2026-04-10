@@ -12,6 +12,7 @@ import org.openrndr.shape.Rectangle
 import org.openrndr.shape.compound
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.min
 
 
 fun DemoCurvesShapes2() {
@@ -85,7 +86,7 @@ fun DemoCurvesShapes2() {
                     drawer.strokeWeight = LINE_WIDTH_THIN
                     drawer.fill = FILL_COLOR
 
-                    val radius = cell.height * 0.25
+                    val radius = min(cell.height * 0.25, cell.width / 7)
                     val col1x = cell.position(0.2, 0.0).x
                     val col2x = cell.center.x
                     val col3x = cell.position(0.78, 0.0).x
@@ -126,9 +127,28 @@ fun DemoCurvesShapes2() {
                 drawBorder(drawer, cell)
                 // Contour builder
                 drawer.isolated {
-                    drawer.stroke = null
+                    drawer.stroke = LINE_COLOR1
+                    drawer.strokeWeight = LINE_WIDTH_THIN
                     drawer.fill = FILL_COLOR
-//                    drawer.contour(contour)
+
+                    val radius = cell.height * 0.65
+                    val offset = radius * 0.8
+                    val xOffset = Vector2(offset, 0.0)
+                    val yOffset = Vector2(0.0, offset)
+
+                    val cross = compound {
+                        union {
+                            intersection {
+                                shape(Circle(cell.center - xOffset, radius).shape)
+                                shape(Circle(cell.center + xOffset, radius).shape)
+                            }
+                            intersection {
+                                shape(Circle(cell.center - yOffset, radius).shape)
+                                shape(Circle(cell.center + yOffset, radius).shape)
+                            }
+                        }
+                    }
+                    drawer.shapes(cross)
                 }
 
                 /*
