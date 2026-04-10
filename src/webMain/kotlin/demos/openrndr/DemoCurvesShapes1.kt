@@ -219,7 +219,7 @@ fun DemoCurvesShapes1() {
                         )
 
                     drawer.stroke = null
-                    drawer.fill = POINT_COLOR
+                    drawer.fill = FILL_COLOR
                     drawer.circle(point, pointRadius)
                     drawer.circles(points0, pointRadius)
                     drawer.circles(points1, pointRadius)
