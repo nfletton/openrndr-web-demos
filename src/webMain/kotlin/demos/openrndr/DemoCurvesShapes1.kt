@@ -140,15 +140,16 @@ fun DemoCurvesShapes1() {
                 drawBorder(drawer, cell)
                 // Offset a segment by a given distance
                 drawer.isolated {
+                    val offset = cell.width / 12.0
                     val seg = Segment2D(
-                        cell.position(0.1, 0.25),
+                        cell.position(0.05, 0.25),
                         cell.position(0.2, 0.8),
                         cell.position(0.8, 0.2),
-                        cell.position(0.9, 0.85)
+                        cell.position(0.85, 0.85)
                     )
                     drawer.segment(seg)
                     drawer.stroke = LINE_COLOR2
-                    drawer.segments(seg.offset(cell.height / 6))
+                    drawer.segments(seg.offset(offset))
                 }
 
                 cell = grid[2][2]
