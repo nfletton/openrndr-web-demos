@@ -9,6 +9,7 @@ import org.openrndr.extra.shapes.primitives.grid
 import org.openrndr.math.Vector2
 import org.openrndr.shape.*
 import kotlin.math.cos
+import kotlin.math.min
 import kotlin.math.sin
 
 
@@ -206,7 +207,7 @@ fun DemoCurvesShapes1() {
                 drawBorder(drawer, cell)
                 // Contour properties animated
                 drawer.isolated {
-                    val radius = cell.height * 0.3
+                    val radius = min(cell.height * 0.3, cell.width / 7.5)
                     val pointRadius = radius * 0.15
                     val point = Circle(
                         cell.corner.x + cell.width * 0.18, cell.center.y, radius

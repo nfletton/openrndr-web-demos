@@ -43,9 +43,11 @@ fun DemoCurvesShapes2() {
                 drawBorder(drawer, cell)
                 // Contour builder
                 drawer.isolated {
+                    val radius1 = min(cell.height / 10, cell.width / 20)
+                    val radius2 = min(cell.height / 5, cell.width / 10)
                     val c = Pulley(
-                        Circle(Vector2.ZERO, cell.height / 9),
-                        Circle(cell.width * 0.35, cell.height * 0.45, cell.height / 5)
+                        Circle(Vector2.ZERO, radius1),
+                        Circle(cell.width * 0.35, cell.height * 0.45, radius2),
                     ).contour
                     val cr = c.rectified()
 
@@ -57,7 +59,7 @@ fun DemoCurvesShapes2() {
                         drawer.stroke = LINE_COLOR1
                         drawer.strokeWeight = LINE_WIDTH_THIN
                         drawer.fill = null
-                        drawer.translate(cell.corner + Vector2(cell.width / 15, cell.height / 5))
+                        drawer.translate(cell.corner + Vector2(cell.width / 10, cell.height / 5))
                         drawer.contour(c)
 
                         // Note how segment length affects the speed
@@ -131,8 +133,8 @@ fun DemoCurvesShapes2() {
                     drawer.strokeWeight = LINE_WIDTH_THIN
                     drawer.fill = FILL_COLOR
 
-                    val radius = cell.height * 0.65
-                    val offset = radius * 0.8
+                    val radius = min(cell.height * 0.9, cell.width * 0.9)
+                    val offset = radius * 0.9
                     val xOffset = Vector2(offset, 0.0)
                     val yOffset = Vector2(0.0, offset)
 
