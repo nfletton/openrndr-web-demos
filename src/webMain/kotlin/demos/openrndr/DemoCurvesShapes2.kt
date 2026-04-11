@@ -1,7 +1,9 @@
 package demos.openrndr
 
 import demos.*
+import offset.offset
 import org.openrndr.application
+import org.openrndr.draw.LineJoin
 import org.openrndr.draw.isolated
 import org.openrndr.extra.shapes.primitives.Pulley
 import org.openrndr.extra.shapes.primitives.grid
@@ -9,10 +11,13 @@ import org.openrndr.extra.shapes.rectify.rectified
 import org.openrndr.math.Vector2
 import org.openrndr.shape.Circle
 import org.openrndr.shape.Rectangle
+import org.openrndr.shape.SegmentJoin
 import org.openrndr.shape.compound
+import org.openrndr.shape.contour
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.sin
 
 
 fun DemoCurvesShapes2() {
@@ -89,6 +94,87 @@ fun DemoCurvesShapes2() {
                     drawer.fill = FILL_COLOR
 
                     val radius = min(cell.height * 0.25, cell.width / 7)
+                    val col2x = cell.center.x
+                    val col1x = col2x - radius * 2
+                    val col3x = col2x + radius * 2
+                    val center = cell.center.y
+
+                    val sub0 = Circle(col1x, center, radius).contour.sub(0.0, 0.5 + 0.50 * sin(seconds))
+                    drawer.contour(sub0)
+
+                    val sub1 = Circle(col2x, center, radius).contour.sub(seconds * 0.1, seconds * 0.1 + 0.1)
+                    drawer.contour(sub1)
+
+                    val sub2 = Circle(col3x, center, radius).contour.sub(-seconds * 0.05, seconds * 0.05 + 0.1)
+                    drawer.contour(sub2)
+                }
+
+                cell = grid[0][2]
+                drawBorder(drawer, cell)
+                // Contour builder
+                drawer.isolated {
+                    drawer.stroke = LINE_COLOR1
+                    drawer.strokeWeight = LINE_WIDTH_THIN
+                    drawer.fill = null
+
+                    val margin = min(cell.width, cell.height) * 0.26
+                    val width = cell.width - margin * 2
+                    val height = cell.height - margin * 2
+                    val offset = min(height, height) * 0.05
+                    val c = Rectangle(cell.corner + margin, width, height).contour.reversed
+
+                    for (i in 1 until 10) {
+                        val o = c.offset(cos(seconds + 0.5) * i * offset, SegmentJoin.BEVEL)
+                        drawer.contour(o)
+                    }
+
+                }
+
+                cell = grid[1][0]
+                drawBorder(drawer, cell)
+                // Contour builder
+                drawer.isolated {
+                    drawer.stroke = LINE_COLOR1
+                    drawer.strokeWeight = LINE_WIDTH_THIN
+                    drawer.fill = null
+                    drawer.lineJoin = LineJoin.ROUND
+
+                    val offset = min(cell.width, cell.height) * 0.02
+
+                    val c = contour {
+                        moveTo(cell.center.x, cell.position(0.0, 0.2).y)
+                        curveTo(cell.position(0.25, 0.4), cell.position(0.75, 0.6), cell.position(0.5, 0.8))
+                    }
+
+                    drawer.contour(c)
+                    for (i in -8..8) {
+                        val o = c.offset(i * offset * cos(seconds + 0.5))
+                        drawer.contour(o)
+                    }
+
+
+//                    val margin = min(cell.width, cell.height) * 0.26
+//                    val width = cell.width - margin * 2
+//                    val height = cell.height - margin * 2
+//                    val offset = min(height, height) * 0.05
+//                    val c = Rectangle(cell.corner + margin, width, height).contour.reversed
+//
+//                    for (i in 1 until 10) {
+//                        val o = c.offset(cos(seconds + 0.5) * i * offset, SegmentJoin.BEVEL)
+//                        drawer.contour(o)
+//                    }
+
+                }
+
+                cell = grid[1][1]
+                drawBorder(drawer, cell)
+                // Contour builder
+                drawer.isolated {
+                    drawer.stroke = LINE_COLOR1
+                    drawer.strokeWeight = LINE_WIDTH_THIN
+                    drawer.fill = FILL_COLOR
+
+                    val radius = min(cell.height * 0.25, cell.width / 7)
                     val col1x = cell.position(0.2, 0.0).x
                     val col2x = cell.center.x
                     val col3x = cell.position(0.78, 0.0).x
@@ -125,7 +211,7 @@ fun DemoCurvesShapes2() {
                     drawer.shapes(si)
                 }
 
-                cell = grid[0][2]
+                cell = grid[1][2]
                 drawBorder(drawer, cell)
                 // Contour builder
                 drawer.isolated {
