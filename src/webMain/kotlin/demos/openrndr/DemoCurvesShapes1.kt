@@ -18,7 +18,7 @@ import kotlin.math.sin
 
 fun DemoCurvesShapes1() {
     application {
-        class LinearSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class LinearSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.9, 0.8)
             )
@@ -36,7 +36,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class QuadraticSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class QuadraticSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.9, 0.1), cell.position(0.9, 0.8)
             )
@@ -50,7 +50,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class CubicSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class CubicSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.2, 0.8), cell.position(0.8, 0.2), cell.position(0.9, 0.8)
             )
@@ -64,7 +64,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class PositionOnSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class PositionOnSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.9, 0.8)
             )
@@ -84,7 +84,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class NormalToSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class NormalToSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.9, 0.1), cell.position(0.9, 0.8)
             )
@@ -106,7 +106,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class EquidistantPositionsDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class EquidistantPositionsDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.2, 0.8), cell.position(0.8, 0.2), cell.position(0.9, 0.8)
             )
@@ -125,7 +125,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class NearestPointOnSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class NearestPointOnSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.2), cell.position(0.2, 0.8), cell.position(0.8, 0.2), cell.position(0.7, 0.9)
             )
@@ -145,7 +145,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class OffsetSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class OffsetSegmentDemo(val cell: Rectangle) : CellDemo {
             val offset = cell.width / 12.0
             val seg = Segment2D(
                 cell.position(0.05, 0.25), cell.position(0.2, 0.8), cell.position(0.8, 0.2), cell.position(0.85, 0.85)
@@ -164,7 +164,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class SubSegmentDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class SubSegmentDemo(val cell: Rectangle) : CellDemo {
             val seg = Segment2D(
                 cell.position(0.1, 0.25), cell.position(0.2, 0.8), cell.position(0.8, 0.2), cell.position(0.9, 0.85)
             )
@@ -182,7 +182,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class ContourBuilderDemo1(val cell: Rectangle, val program: Program) : CellDemo {
+        class ContourBuilderDemo1(val cell: Rectangle) : CellDemo {
             val contour = contour {
                 moveTo(cell.position(0.1, 0.2))
                 lineTo(cell.position(0.2, 0.8))
@@ -204,7 +204,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class ContourBuilderDemo2(val cell: Rectangle, val program: Program) : CellDemo {
+        class ContourBuilderDemo2(val cell: Rectangle) : CellDemo {
             val start = cell.position(0.1, 0.6)
             val stepX = cell.width / 24.0
             val stepY = cell.height / 45.0
@@ -225,7 +225,7 @@ fun DemoCurvesShapes1() {
             }
         }
 
-        class ContourPropertiesDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class ContourPropertiesDemo(val cell: Rectangle) : CellDemo {
             val radius = min(cell.height * 0.3, cell.width / 7.5)
             val pointRadius = radius * 0.15
             val contour1 = Circle(cell.corner.x + cell.width * 0.18, cell.center.y, radius).contour
@@ -259,18 +259,18 @@ fun DemoCurvesShapes1() {
                     columns, rows, margin, margin, gutter, gutter
                 )
                 return listOf(
-                    LinearSegmentDemo(grid[0][0], this),
-                    QuadraticSegmentDemo(grid[0][1], this),
-                    CubicSegmentDemo(grid[0][2], this),
-                    PositionOnSegmentDemo(grid[1][0], this),
-                    NormalToSegmentDemo(grid[1][1], this),
-                    EquidistantPositionsDemo(grid[1][2], this),
-                    NearestPointOnSegmentDemo(grid[2][0], this),
-                    OffsetSegmentDemo(grid[2][1], this),
-                    SubSegmentDemo(grid[2][2], this),
-                    ContourBuilderDemo1(grid[3][0], this),
-                    ContourBuilderDemo2(grid[3][1], this),
-                    ContourPropertiesDemo(grid[3][2], this)
+                    LinearSegmentDemo(grid[0][0]),
+                    QuadraticSegmentDemo(grid[0][1]),
+                    CubicSegmentDemo(grid[0][2]),
+                    PositionOnSegmentDemo(grid[1][0]),
+                    NormalToSegmentDemo(grid[1][1]),
+                    EquidistantPositionsDemo(grid[1][2]),
+                    NearestPointOnSegmentDemo(grid[2][0]),
+                    OffsetSegmentDemo(grid[2][1]),
+                    SubSegmentDemo(grid[2][2]),
+                    ContourBuilderDemo1(grid[3][0]),
+                    ContourBuilderDemo2(grid[3][1]),
+                    ContourPropertiesDemo(grid[3][2])
                 )
             }
 

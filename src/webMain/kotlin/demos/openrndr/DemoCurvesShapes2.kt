@@ -20,7 +20,7 @@ import kotlin.math.sin
 
 fun DemoCurvesShapes2() {
     application {
-        class RectifiedContourDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class RectifiedContourDemo(val cell: Rectangle) : CellDemo {
             val radius1 = min(cell.height / 10, cell.width / 20)
             val radius2 = min(cell.height / 5, cell.width / 10)
             val c = Pulley(
@@ -67,7 +67,7 @@ fun DemoCurvesShapes2() {
             }
         }
 
-        class SubContourDemo(val cell: Rectangle, val program: Program) : CellDemo {
+        class SubContourDemo(val cell: Rectangle) : CellDemo {
             val radius = min(cell.height * 0.25, cell.width / 7)
             val col2x = cell.center.x
             val col1x = col2x - radius * 2
@@ -99,7 +99,7 @@ fun DemoCurvesShapes2() {
             }
         }
 
-        class OffsetSegmentDemo1(val cell: Rectangle, val program: Program) : CellDemo {
+        class OffsetSegmentDemo1(val cell: Rectangle) : CellDemo {
             val margin = min(cell.width, cell.height) * 0.26
             val width = cell.width - margin * 2
             val height = cell.height - margin * 2
@@ -121,7 +121,7 @@ fun DemoCurvesShapes2() {
             }
         }
 
-        class OffsetSegmentDemo2(val cell: Rectangle, val program: Program) : CellDemo {
+        class OffsetSegmentDemo2(val cell: Rectangle) : CellDemo {
             val offset = min(cell.width, cell.height) * 0.02
 
             val c = contour {
@@ -146,7 +146,7 @@ fun DemoCurvesShapes2() {
             }
         }
 
-        class BooleanOpsDemo1(val cell: Rectangle, val program: Program) : CellDemo {
+        class BooleanOpsDemo1(val cell: Rectangle) : CellDemo {
             val radius = min(cell.height * 0.25, cell.width / 7)
             val col1x = cell.position(0.2, 0.0).x
             val col2x = cell.center.x
@@ -194,7 +194,7 @@ fun DemoCurvesShapes2() {
             }
         }
 
-        class BooleanOpsDemo2(val cell: Rectangle, val program: Program) : CellDemo {
+        class BooleanOpsDemo2(val cell: Rectangle) : CellDemo {
             val radius = min(cell.height * 0.9, cell.width * 0.9)
             val offset = radius * 0.9
             val xOffset = Vector2(offset, 0.0)
@@ -236,12 +236,12 @@ fun DemoCurvesShapes2() {
                     columns, rows, margin, margin, gutter, gutter
                 )
                 return listOf(
-                    RectifiedContourDemo(grid[0][0], this),
-                    SubContourDemo(grid[0][1], this),
-                    OffsetSegmentDemo1(grid[0][2], this),
-                    OffsetSegmentDemo2(grid[1][0], this),
-                    BooleanOpsDemo1(grid[1][1], this),
-                    BooleanOpsDemo2(grid[1][2], this)
+                    RectifiedContourDemo(grid[0][0]),
+                    SubContourDemo(grid[0][1]),
+                    OffsetSegmentDemo1(grid[0][2]),
+                    OffsetSegmentDemo2(grid[1][0]),
+                    BooleanOpsDemo1(grid[1][1]),
+                    BooleanOpsDemo2(grid[1][2])
                 )
             }
 
